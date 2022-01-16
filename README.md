@@ -14,4 +14,9 @@
  limitations under the License.
 -->
 
-# Kantaros-bot
+# Kantharos-bot
+
+Personal project bot for shits and giggles
+
+* E-sports matches from [pandascore](https://pandascore.co/)
+* Basic music functionality (youtube)
