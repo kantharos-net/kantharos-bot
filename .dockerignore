@@ -1,4 +1,11 @@
 *.md
+.coverage
+.gitignore
+.flake8
 .git/
 .vscode/
+.venv/
+.tox/
+.pytest_cache/
+dist/
 Dockerfile

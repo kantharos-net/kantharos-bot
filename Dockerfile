@@ -21,8 +21,10 @@ COPY . .
 RUN apt update -m \
     && apt dist-upgrade -y \
     && apt install ffmpeg -y \
-    && pip install poetry \
-    && poetry config virtualenvs.create false \
-    && poetry install --no-dev --no-interaction --no-ansi
+    && apt autoremove -y \
+    && apt autoclean -y
+
+RUN pip install poetry \
+    && poetry install --no-dev --no-interaction
 
 CMD ["poetry", "run", "kantharos-bot", "> /dev/stdout"]
