@@ -42,7 +42,7 @@ source = ["src"]
 
 [tool.coverage.report]
 show_missing = true
-fail_under = 1
+fail_under = 0
 
 [tool.isort]
 profile = "hug"

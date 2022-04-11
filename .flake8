@@ -18,6 +18,7 @@
 [flake8]
 exclude = 
     .git,
+    .tox,
     .venv,
     __pycache__,
     docs/source/conf.py,

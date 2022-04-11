@@ -76,7 +76,7 @@ async def resume(ctx: Context):
     if voice_client.is_paused():
         await voice_client.resume()
     else:
-        await ctx.send("The bot was not playing anything before this. Use play_song command")
+        await ctx.send("The bot was not playing anything before this. Use play command")
 
 
 @bot.command(name="stop", help="Stops the song")

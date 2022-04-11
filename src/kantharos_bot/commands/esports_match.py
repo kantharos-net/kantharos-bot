@@ -64,6 +64,11 @@ async def matches(ctx: Context, game: str = "dota-2", matches_max: int = 10):
             else:
                 bst_time: str = "No match time defined yet"
 
+            official_stream_url = next(
+                (stream["raw_url"] for stream in item["stream_list"] if stream["type"] == "main"),
+                "No official stream url",
+            )
+
             m_pat: str = "{league_n} - {tournm_n} - {status}\n{match_n}\n{time}\n{stream_url}\n"
             matches_message.append(
                 m_pat.format(
@@ -72,7 +77,7 @@ async def matches(ctx: Context, game: str = "dota-2", matches_max: int = 10):
                     status=item["status"].title().replace("_", " "),
                     match_n=item["name"],
                     time=bst_time,
-                    stream_url=item["official_stream_url"],
+                    stream_url=official_stream_url,
                 )
             )
 
