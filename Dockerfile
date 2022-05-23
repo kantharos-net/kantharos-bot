@@ -18,13 +18,20 @@ WORKDIR /usr/src/app
 
 COPY . .
 
-RUN apt update -m \
-    && apt dist-upgrade -y \
-    && apt install ffmpeg -y \
-    && apt autoremove -y \
-    && apt autoclean -y
+RUN apk update \
+    && apk upgrade \
+    && apk add ffmpeg \
+    && apk add --no-cache \
+        --virtual .builds \
+        ca-certificates \
+        build-base \
+        linux-headers \
+        gcc \
+        python3-dev \
+        libffi-dev
 
 RUN pip install poetry \
-    && poetry install --no-dev --no-interaction
+    && poetry install --no-dev --no-interaction \
+    && apk del .builds
 
 CMD ["poetry", "run", "kantharos-bot", "> /dev/stdout"]
