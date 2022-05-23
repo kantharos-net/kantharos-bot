@@ -17,8 +17,8 @@ from typing import Any, Dict
 
 from discord import PCMVolumeTransformer
 from discord.player import AudioSource
-from youtube_dl import YoutubeDL
 from kantharos_bot.utils.config import settings
+from youtube_dl import YoutubeDL
 
 ytdl: YoutubeDL = YoutubeDL(settings.ytdl_format_options)
 

@@ -19,7 +19,7 @@ CONFIG_PATH: str = "config"
 settings = Dynaconf(
     envvar_prefix="KANTHAROS_BOT",
     root_path=CONFIG_PATH,
-    settings_files=['settings.toml', '.secrets.toml']
+    settings_files=["settings.toml", ".secrets.toml"],
 )
 
 # `envvar_prefix` = export envvars with `export DYNACONF_FOO=bar`.

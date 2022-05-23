@@ -37,8 +37,8 @@ async def matches(ctx: Context, game_name: str = "dota-2", matches_max: int = 10
             game_slug_selected = game_slug
 
     log_string: List[str] = [
-        f'Game: {game_slug_selected}',
-        f'Game id: {settings.games.get(game_slug_selected)}',
+        f"Game: {game_slug_selected}",
+        f"Game id: {settings.games.get(game_slug_selected)}",
     ]
     logging.info(" ; ".join(log_string))
 
@@ -49,7 +49,7 @@ async def matches(ctx: Context, game_name: str = "dota-2", matches_max: int = 10
     range_begin: str = (now + td(hours=-3)).strftime(settings.default_datetime_format)
 
     response_data: List[Dict[str, Any]] = ps_client.all_games.get_matches(
-        filter=f'videogame={game_slug_selected};finished=false',
+        filter=f"videogame={game_slug_selected};finished=false",
         range=f"scheduled_at={range_begin},{range_end}",
         sort="begin_at",
     )

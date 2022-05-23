@@ -13,6 +13,7 @@
 # limitations under the License.
 
 from typing import Any, Dict
+
 from discord import Client, Intents
 from discord.ext.commands import Bot
 from discord.ext.commands.context import Context
