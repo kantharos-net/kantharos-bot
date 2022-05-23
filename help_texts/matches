@@ -1,3 +1,5 @@
+Returns upcoming matches for e-sports games. Data from Pandascore (https://pandascore.co/)
+
 Possible games:
     - Valorant -> valorant
     - FIFA -> fifa

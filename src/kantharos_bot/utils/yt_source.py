@@ -17,10 +17,10 @@ from typing import Any, Dict
 
 from discord import PCMVolumeTransformer
 from discord.player import AudioSource
-from kantharos_bot.utils.load_config import load_config
 from youtube_dl import YoutubeDL
+from kantharos_bot.utils.config import settings
 
-ytdl: YoutubeDL = YoutubeDL(load_config("youtube_dl_cfg")["ytdl_format_options"])
+ytdl: YoutubeDL = YoutubeDL(settings.ytdl_format_options)
 
 
 class YTDLSource(PCMVolumeTransformer):

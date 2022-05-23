@@ -12,24 +12,32 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from typing import Any, Dict
 from discord import Client, Intents
 from discord.ext.commands import Bot
 from discord.ext.commands.context import Context
-from kantharos_bot.utils.load_config import load_config
+from kantharos_bot.utils.config import settings
 
 intents = Intents.all()
 client = Client(intents=intents)
-bot = Bot(command_prefix=".", intents=intents)
+bot_client = Bot(command_prefix=".", intents=intents)
 
 
-@bot.event
+@bot_client.event
 async def on_ready():
-    from kantharos_bot.commands import esports_match, esports_tournament, music_stream
+    from kantharos_bot.commands import (  # noqa F811
+        esports_match,
+        esports_tournament,
+        fact,
+        insult,
+        joke,
+        music_stream,
+    )
 
-    print(f"Logged in as {bot.user.name} - {bot.user.id}")
+    print(f"Logged in as {bot_client.user.name} - {bot_client.user.id}")
 
 
-@bot.command(name="join", help="Tells the bot to join the voice channel")
+@bot_client.command(name="join", help="Tells the bot to join the voice channel")
 async def join(ctx: Context):
     if not ctx.message.author.voice:
         await ctx.send("{} is not connected to a voice channel".format(ctx.message.author.name))
@@ -39,7 +47,7 @@ async def join(ctx: Context):
     await channel.connect()
 
 
-@bot.command(name="leave", help="To make the bot leave the voice channel")
+@bot_client.command(name="leave", help="To make the bot leave the voice channel")
 async def leave(ctx: Context):
     voice_client = ctx.message.guild.voice_client
     if voice_client.is_connected():
@@ -49,5 +57,4 @@ async def leave(ctx: Context):
 
 
 def run_bot() -> None:
-    token: str = load_config()["discord_token"]
-    bot.run(token)
+    bot_client.run(settings.discord_token)

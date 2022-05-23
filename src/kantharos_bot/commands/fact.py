@@ -12,10 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from kantharos_bot import bot
-from kantharos_bot.utils import logging
+
+from typing import Any, Dict
+
+import requests
+from discord.ext.commands.context import Context
+from kantharos_bot.bot import bot_client
+from kantharos_bot.utils.config import settings
+from kantharos_bot.utils.load_help import load_help
 
 
-def main():
-    logging.setup_logging()
-    bot.run_bot()
+@bot_client.command(name="fact", help=load_help("fact"))
+async def fact(ctx: Context, lang: str = "en"):
+
+    response = requests.get(f"{settings.facts_url}?language={lang}").json()
+
+    fact: str = f"Here is your fact:\n{response['text']}\nFact URL: {response['permalink']}"
+
+    await ctx.send(fact)

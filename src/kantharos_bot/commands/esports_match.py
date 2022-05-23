@@ -20,33 +20,36 @@ from typing import Any, Dict, List
 import pytz
 from discord.ext.commands.context import Context
 from fuzzywuzzy import fuzz
-from kantharos_bot.bot.bot import bot
-from kantharos_bot.utils.load_config import load_config
+from kantharos_bot.bot import bot_client
+from kantharos_bot.utils.config import settings
 from kantharos_bot.utils.load_help import load_help
 from pandascore import Client
 
 
-@bot.command(name="matches", help=load_help("matches"))
-async def matches(ctx: Context, game: str = "dota-2", matches_max: int = 10):
-    cfg: Dict[str, Any] = load_config()
+@bot_client.command(name="matches", help=load_help("matches"))
+async def matches(ctx: Context, game_name: str = "dota-2", matches_max: int = 10):
 
-    fuzzy_scores: List[float] = [fuzz.ratio(item["slug"], game) for item in cfg["games"]]
-    max_score_index: int = fuzzy_scores.index(max(fuzzy_scores))
+    fuzz_score = 0
+    for game_slug in settings.games.keys():
+        temp = fuzz.ratio(game_slug, game_name)
+        if temp > fuzz_score:
+            fuzz_score = temp
+            game_slug_selected = game_slug
 
     log_string: List[str] = [
-        f'Selected game: {cfg["games"][max_score_index]["slug"]}',
-        f'Selected game id: {cfg["games"][max_score_index]["id"]}',
+        f'Game: {game_slug_selected}',
+        f'Game id: {settings.games.get(game_slug_selected)}',
     ]
     logging.info(" ; ".join(log_string))
 
-    ps_client = Client(access_token=cfg["pandascore_token"])
+    ps_client = Client(access_token=settings.pandascore_token)
 
     now: dt = dt.now()
-    range_end: str = (now + td(days=10)).strftime(cfg["default_datetime_format"])
-    range_begin: str = (now + td(hours=-3)).strftime(cfg["default_datetime_format"])
+    range_end: str = (now + td(days=10)).strftime(settings.default_datetime_format)
+    range_begin: str = (now + td(hours=-3)).strftime(settings.default_datetime_format)
 
     response_data: List[Dict[str, Any]] = ps_client.all_games.get_matches(
-        filter=f'videogame={cfg["games"][max_score_index]["slug"]};finished=false',
+        filter=f'videogame={game_slug_selected};finished=false',
         range=f"scheduled_at={range_begin},{range_end}",
         sort="begin_at",
     )
@@ -56,10 +59,10 @@ async def matches(ctx: Context, game: str = "dota-2", matches_max: int = 10):
         for item in response_data:
             if item["begin_at"]:
                 utc_time: dt = pytz.utc.localize(
-                    dt.strptime(item["begin_at"], cfg["default_datetime_format"])
+                    dt.strptime(item["begin_at"], settings.default_datetime_format)
                 )
                 bst_time: str = utc_time.astimezone(
-                    pytz.timezone(cfg["default_timezone"])
+                    pytz.timezone(settings.default_timezone)
                 ).strftime("%d/%m/%Y %H:%M Brazil time")
             else:
                 bst_time: str = "No match time defined yet"

@@ -17,19 +17,18 @@ from typing import Any, Dict
 
 from discord import FFmpegPCMAudio
 from discord.ext.commands.context import Context
-from kantharos_bot.bot.bot import bot
-from kantharos_bot.utils.load_config import load_config
+from kantharos_bot.bot import bot_client
+from kantharos_bot.utils.config import settings
 from kantharos_bot.utils.load_help import load_help
 from kantharos_bot.utils.yt_source import YTDLSource
 from pytube import YouTube
 
 
-@bot.command(name="music", help=load_help("music"))
+@bot_client.command(name="music", help=load_help("music"))
 async def music(ctx: Context, link: str = ""):
-    cfg: Dict[str, Any] = load_config()
 
     logging.info("Provided yt link: {}".format(link))
-    logging.info("Config: {}".format(cfg))
+    logging.info("Config: {}".format(settings))
 
     if link == "":
         await ctx.send("Please provide a valid link")
@@ -47,21 +46,21 @@ async def music(ctx: Context, link: str = ""):
     await ctx.send(response)
 
 
-@bot.command(name="play", help="To play song")
+@bot_client.command(name="play", help="To play song")
 async def play(ctx: Context, url: str):
     try:
         server = ctx.message.guild
         voice_channel = server.voice_client
 
         async with ctx.typing():
-            filename = await YTDLSource.from_url(url, loop=bot.loop)
+            filename = await YTDLSource.from_url(url, loop=bot_client.loop)
             voice_channel.play(FFmpegPCMAudio(executable="ffmpeg", source=filename))
         await ctx.send("**Now playing:** {}".format(filename))
     except Exception as e:
         await ctx.send("The bot is not connected to a voice channel. Exception: {}".format(e))
 
 
-@bot.command(name="pause", help="This command pauses the song")
+@bot_client.command(name="pause", help="This command pauses the song")
 async def pause(ctx: Context):
     voice_client = ctx.message.guild.voice_client
     if voice_client.is_playing():
@@ -70,7 +69,7 @@ async def pause(ctx: Context):
         await ctx.send("The bot is not playing anything at the moment.")
 
 
-@bot.command(name="resume", help="Resumes the song")
+@bot_client.command(name="resume", help="Resumes the song")
 async def resume(ctx: Context):
     voice_client = ctx.message.guild.voice_client
     if voice_client.is_paused():
@@ -79,7 +78,7 @@ async def resume(ctx: Context):
         await ctx.send("The bot was not playing anything before this. Use play command")
 
 
-@bot.command(name="stop", help="Stops the song")
+@bot_client.command(name="stop", help="Stops the song")
 async def stop(ctx: Context):
     voice_client = ctx.message.guild.voice_client
     if voice_client.is_playing():

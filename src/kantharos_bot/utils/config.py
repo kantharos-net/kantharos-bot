@@ -11,3 +11,16 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+from dynaconf import Dynaconf
+
+CONFIG_PATH: str = "config"
+
+settings = Dynaconf(
+    envvar_prefix="KANTHAROS_BOT",
+    root_path=CONFIG_PATH,
+    settings_files=['settings.toml', '.secrets.toml']
+)
+
+# `envvar_prefix` = export envvars with `export DYNACONF_FOO=bar`.
+# `settings_files` = Load these files in the order.

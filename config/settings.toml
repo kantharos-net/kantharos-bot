@@ -1,0 +1,33 @@
+insults_url="https://evilinsult.com/generate_insult.php"
+facts_url="https://uselessfacts.jsph.pl/random.json"
+pandascore_endpoint="https://api.pandascore.co"
+default_datetime_format="%Y-%m-%dT%H:%M:%SZ"
+default_timezone="America/Sao_Paulo"
+
+# Games configuration from pandascore. game_slug = game_id
+[games]
+valorant = 26
+fifa = 25
+r6-siege = 24
+cod-mw = 23
+rl = 22
+pubg = 20 
+ow = 14
+dota-2 = 4
+cs-go = 3
+league-of-legends = 1
+
+[ytdl_format_options]
+format="bestaudio/best"
+restrictfilenames=true
+noplaylist=true
+nocheckcertificate=true
+ignoreerrors=false
+logtostderr=false
+quiet=true
+no_warnings=true
+default_search="auto"
+source_address="0.0.0.0"  # bind to ipv4 since ipv6 addresses cause issues sometimes
+
+[ffmpeg_options]
+options= "-vn"

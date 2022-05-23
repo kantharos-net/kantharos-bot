@@ -12,10 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from kantharos_bot import bot
-from kantharos_bot.utils import logging
+
+from typing import Any, Dict
+
+import requests
+from discord.ext.commands.context import Context
+from kantharos_bot.bot import bot_client
+from kantharos_bot.utils.config import settings
+from kantharos_bot.utils.load_help import load_help
 
 
-def main():
-    logging.setup_logging()
-    bot.run_bot()
+@bot_client.command(name="insult", help=load_help("insult"))
+async def insult(ctx: Context, lang: str = "en"):
+
+    response = requests.get(f"{settings.insults_url}?lang={lang}&type=json").json()
+
+    fact: str = f"Here is your insult:\n{response['insult']}"
+
+    await ctx.send(fact)
