@@ -24,7 +24,6 @@ from kantharos_bot.utils.load_help import load_help
 
 @bot_client.command(name="fact", help=load_help("fact"))
 async def fact(ctx: Context, lang: str = "en"):
-
     response = requests.get(f"{settings.facts_url}?language={lang}").json()
 
     fact: str = f"Here is your fact:\n{response['text']}\nFact URL: {response['permalink']}"

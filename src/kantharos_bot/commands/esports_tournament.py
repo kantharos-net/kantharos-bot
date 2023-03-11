@@ -28,7 +28,6 @@ from pandascore import Client
 
 @bot_client.command(name="tournaments", help=load_help("tournaments"))
 async def tournaments(ctx: Context, game: str = "dota-2"):
-
     fuzzy_scores: List[float] = [fuzz.ratio(item["slug"], game) for item in settings["games"]]
     max_score_index: int = fuzzy_scores.index(max(fuzzy_scores))
 

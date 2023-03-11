@@ -28,7 +28,6 @@ from pandascore import Client
 
 @bot_client.command(name="matches", help=load_help("matches"))
 async def matches(ctx: Context, game_name: str = "dota-2", matches_max: int = 10):
-
     fuzz_score = 0
     for game_slug in settings.games.keys():
         temp = fuzz.ratio(game_slug, game_name)

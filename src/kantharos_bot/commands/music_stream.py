@@ -26,7 +26,6 @@ from pytube import YouTube
 
 @bot_client.command(name="music", help=load_help("music"))
 async def music(ctx: Context, link: str = ""):
-
     logging.info("Provided yt link: {}".format(link))
     logging.info("Config: {}".format(settings))
 

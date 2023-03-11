@@ -5,36 +5,36 @@ description = ""
 authors = ["Andre Faria <andremarcalfaria@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.8"
-discord = "^1.7.3"
+python = ">=3.10,<4.0"
+discord = "^2.2.2"
 pandascore = "^0.2.0"
 toml = "^0.10.2"
-pytz = "^2021.3"
+pytz = "^2022.7.1"
 fuzzywuzzy = "^0.18.0"
-pytube = "^11.0.2"
+pytube = "^12.1.2"
 youtube_dl = "^2021.12.17"
 PyNaCl = "^1.5.0"
-jokeapi = "^1.0.4"
-black = "^22.3.0"
-python-Levenshtein = "^0.12.2"
-dynaconf = "^3.1.8"
+jokeapi = "^1.0.5"
+python-Levenshtein = "^0.20.9"
+dynaconf = "^3.1.12"
 
 [tool.poetry.dev-dependencies]
-pytest = "^6.2.5"
-flake8 = "^4.0.1"
-black = "^22.3.0"
-mypy = "^0.931"
-coverage = "^6.2"
-isort = "^5.10.1"
-tox = "^3.24.5"
-ipython = "^8.0.0"
+pytest = "^7.2.2"
+flake8 = "^6.0.0"
+black = "^23.1.0"
+mypy = "^1.1.1"
+coverage = "^7.2.1"
+isort = "^5.12.0"
+tox = "^4.4.6"
+ipython = "^8.11.0"
+pylint = "^2.17.0"
 
 [tool.poetry.scripts]
 kantharos-bot = "kantharos_bot.main:main"
 
 [tool.black]
 line-length = 100
-target-version = ['py38',"py39","py310"]
+target-version = ["py310"]
 include = '\.pyi?$'
 
 [tool.coverage.paths]
@@ -52,18 +52,32 @@ fail_under = 0
 profile = "hug"
 src_paths = ["isort", "test"]
 
+[tool.pylint.main]
+fail-under = 1
+py-version = "3.10"
+
+[tool.pylint.basic]
+argument-naming-style = "snake_case"
+attr-naming-style = "snake_case"
+docstring-min-length = -1
+const-naming-style = "UPPER_CASE"
+
+[tool.pylint.format]
+max-line-length = 100
+
 [tool.tox]
 legacy_tox_ini = """
 [tox]
 skipsdist = true
-envlist = py38,py39,py310
+envlist = py310
 
 [testenv]
-whitelist_externals = poetry
+allowlist_externals = poetry
 commands =
     poetry install -v
     poetry run isort .
     poetry run black .
+    poetry run pylint ./**/*.py
     poetry run coverage run -m pytest
     poetry run coverage report
 """

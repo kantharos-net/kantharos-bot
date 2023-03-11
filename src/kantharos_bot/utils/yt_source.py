@@ -34,7 +34,6 @@ class YTDLSource(PCMVolumeTransformer):
     async def from_url(
         cls, url: str, *, loop: AbstractEventLoop = None, stream: str = False
     ) -> str:
-
         loop: AbstractEventLoop = loop or get_event_loop()
         data: Dict[str, Any] = await loop.run_in_executor(
             None, lambda: ytdl.extract_info(url, download=not stream)
