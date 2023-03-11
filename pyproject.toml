@@ -27,7 +27,7 @@ mypy = "^0.931"
 coverage = "^6.2"
 isort = "^5.10.1"
 tox = "^3.24.5"
-ipython = "^8.0.0"
+ipython = "^8.10.0"
 
 [tool.poetry.scripts]
 kantharos-bot = "kantharos_bot.main:main"
