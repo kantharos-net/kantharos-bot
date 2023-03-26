@@ -31,7 +31,7 @@ RUN apk update \
         libffi-dev
 
 RUN pip install poetry \
-    && poetry install --no-dev --no-interaction \
+    && poetry install --only main --no-interaction \
     && apk del .builds
 
 CMD ["poetry", "run", "kantharos-bot", "> /dev/stdout"]
