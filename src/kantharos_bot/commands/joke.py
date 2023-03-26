@@ -18,6 +18,9 @@ from discord.ext.commands.context import Context
 from jokeapi import Jokes
 from kantharos_bot.bot import bot_client
 from kantharos_bot.utils.load_help import load_help
+from kantharos_bot.utils.logging import logging
+
+TEMPLATE = "Here is your joke:\n{ask}\n{punchline}"
 
 
 @bot_client.command(name="joke", help=load_help("joke"))
@@ -26,13 +29,14 @@ async def joke(ctx: Context, lang: str = "en", search: str = None):
 
     joke: Coroutine = await jk_obj.get_joke(response_format="json", search_string=search, lang=lang)
 
-    template: str = "Here is your joke:\n{ask}\n{punchline}"
-
     if joke["error"] is True:
-        response: str = template.format(ask=joke["message"], punchline=", ".join(joke["causedBy"]))
+        response: str = TEMPLATE.format(ask=joke["message"], punchline=", ".join(joke["causedBy"]))
+        logging.error(response)
     elif joke["type"] == "single":
-        response: str = template.format(ask=joke["joke"], punchline="")
+        response: str = TEMPLATE.format(ask=joke["joke"], punchline="")
+        logging.info(response)
     else:
-        response: str = template.format(ask=joke["setup"], punchline=joke["delivery"])
+        response: str = TEMPLATE.format(ask=joke["setup"], punchline=joke["delivery"])
+        logging.info(response)
 
     await ctx.send(response)

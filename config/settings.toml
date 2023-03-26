@@ -11,7 +11,7 @@ fifa = 25
 r6-siege = 24
 cod-mw = 23
 rl = 22
-pubg = 20 
+pubg = 20
 ow = 14
 dota-2 = 4
 cs-go = 3
@@ -31,3 +31,10 @@ source_address="0.0.0.0"  # bind to ipv4 since ipv6 addresses cause issues somet
 
 [ffmpeg_options]
 options= "-vn"
+
+[openchat]
+temp_file_path="/tmp/chat_history"
+clean_history_command="clean"
+default_model="gpt-3.5-turbo"
+default_system_content=""
+default_assistant_content=""

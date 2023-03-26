@@ -25,8 +25,8 @@ bot_client = Bot(command_prefix=".", intents=intents)
 @bot_client.event
 async def on_ready():
     from kantharos_bot.commands import (  # noqa F811
+        chat,
         esports_match,
-        esports_tournament,
         fact,
         insult,
         joke,

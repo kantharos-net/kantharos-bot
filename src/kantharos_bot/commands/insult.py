@@ -20,12 +20,15 @@ from discord.ext.commands.context import Context
 from kantharos_bot.bot import bot_client
 from kantharos_bot.utils.config import settings
 from kantharos_bot.utils.load_help import load_help
+from kantharos_bot.utils.logging import logging
 
 
 @bot_client.command(name="insult", help=load_help("insult"))
 async def insult(ctx: Context, lang: str = "en"):
     response = requests.get(f"{settings.insults_url}?lang={lang}&type=json").json()
 
-    fact: str = f"Here is your insult:\n{response['insult']}"
+    insult: str = f"Here is your insult:\n{response['insult']}"
 
-    await ctx.send(fact)
+    logging.info(insult)
+
+    await ctx.send(insult)

@@ -12,14 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import logging
-from typing import Any, Dict
-
 from discord import FFmpegPCMAudio
 from discord.ext.commands.context import Context
 from kantharos_bot.bot import bot_client
 from kantharos_bot.utils.config import settings
 from kantharos_bot.utils.load_help import load_help
+from kantharos_bot.utils.logging import logging
 from kantharos_bot.utils.yt_source import YTDLSource
 from pytube import YouTube
 
