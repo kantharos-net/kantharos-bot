@@ -25,7 +25,7 @@ from kantharos_bot.utils.logging import logging
 
 @bot_client.command(name="chat", help=load_help("chat"))
 async def chat(ctx: Context, *prompt: str):
-    openai.api_key = settings.openapi_token
+    openai.api_key = settings.openai_token
 
     clean = False
     prompt_string = " ".join(prompt)
