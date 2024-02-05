@@ -1,8 +1,6 @@
 {
     "python.poetryPath": "poetry",
     "python.defaultInterpreterPath": "./.venv/bin/python",
-    "python.linting.flake8Enabled": true,
-    "python.linting.enabled": true,
     "python.languageServer": "Pylance",
     "python.analysis.autoImportCompletions": true
 }
