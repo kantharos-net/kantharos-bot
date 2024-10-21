@@ -15,8 +15,9 @@ dependencies = [
     "jokeapi>=1.0.5",
     "dynaconf>=3.2.6",
     "openai>=1.52.0",
+    "audioop-lts>=0.2.1",
 ]
-requires-python = ">=3.10"
+requires-python = ">=3.13"
 readme = "README.md"
 license = { text = "MIT" }
 
