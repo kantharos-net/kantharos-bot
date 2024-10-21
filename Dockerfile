@@ -30,8 +30,6 @@ RUN apk update \
         python3-dev \
         libffi-dev
 
-RUN pip install poetry \
-    && poetry install --only main --no-interaction \
-    && apk del .builds
+RUN pip install pdm && pdm install 
 
-CMD ["poetry", "run", "kantharos-bot", "> /dev/stdout"]
+CMD ["pdm", "run", "kantharos-bot", "> /dev/stdout"]

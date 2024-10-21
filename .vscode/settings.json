@@ -1,6 +1,0 @@
-{
-    "python.poetryPath": "poetry",
-    "python.defaultInterpreterPath": "./.venv/bin/python",
-    "python.languageServer": "Pylance",
-    "python.analysis.autoImportCompletions": true
-}
